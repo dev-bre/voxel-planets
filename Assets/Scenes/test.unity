@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 2
+    serializedVersion: 3
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    accuratePlacement: 0
+    buildHeightMesh: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -128,6 +128,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5124066767702790976, guid: bbde3826eec5fba4a98c9eb940c8d356, type: 3}
@@ -191,6 +192,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1470024010}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbde3826eec5fba4a98c9eb940c8d356, type: 3}
 --- !u!4 &454310088 stripped
 Transform:
@@ -227,14 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
   m_Intensity: 100000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -318,6 +314,7 @@ MonoBehaviour:
   m_BarnDoorAngle: 90
   m_BarnDoorLength: 0.05
   m_preserveCachedShadow: 0
+  m_OnDemandShadowRenderOnPlacement: 1
   m_ShadowCascadeRatios:
   - 0.05
   - 0.2
@@ -333,10 +330,17 @@ MonoBehaviour:
   useOldInspector: 0
   useVolumetric: 1
   featuresFoldout: 1
-  showAdditionalSettings: 0
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
 --- !u!108 &613164281
 Light:
   m_ObjectHideFlags: 0
@@ -406,12 +410,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 613164279}
+  serializedVersion: 2
   m_LocalRotation: {x: 0.352759, y: -0.36313444, z: -0.08315484, w: 0.85835874}
   m_LocalPosition: {x: 3835, y: 1569, z: -1083}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 33.038, y: -54.451, z: -28.418}
 --- !u!1 &743976738 stripped
 GameObject:
@@ -423,6 +428,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 180826572352461633, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
@@ -486,6 +492,10 @@ PrefabInstance:
       value: 1100
       objectReference: {fileID: 0}
     - target: {fileID: 1098891548874345202, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
+      propertyPath: planetSurfaceSDF.noiseSettings.amplitude
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1098891548874345202, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
       propertyPath: biomeMaterialsData.Array.data[0].voxelMat
       value: 
       objectReference: {fileID: 11400000, guid: 86ef81e32074ac74d96e9a0b14d282c5, type: 2}
@@ -494,12 +504,19 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 180826572352461658, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1613912559}
   m_SourcePrefab: {fileID: 100100000, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
 --- !u!1001 &1021245356
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 9029457468874266177, guid: 8ae0d33e8af538b4383dfb468b09d573, type: 3}
@@ -550,13 +567,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: AtmospherePassController
       objectReference: {fileID: 0}
+    - target: {fileID: 9029457468874266204, guid: 8ae0d33e8af538b4383dfb468b09d573, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ae0d33e8af538b4383dfb468b09d573, type: 3}
 --- !u!1001 &1130090661
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2573019577688647748, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
@@ -566,6 +591,14 @@ PrefabInstance:
     - target: {fileID: 2573019577688647752, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2573019577688647754, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
+      propertyPath: m_Version
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2573019577688647754, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
+      propertyPath: m_RenderingPathCustomFrameSettings.msaaMode
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2573019577688647755, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
       propertyPath: pointOfView
@@ -616,6 +649,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68fc8c0f47222d447af2d65619ad1006, type: 3}
 --- !u!1 &1470024010 stripped
 GameObject:
@@ -627,6 +663,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 180826572352461633, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
@@ -734,6 +771,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80d5831799e739b4db69b3e45e93bee0, type: 3}
 --- !u!1 &1613912551 stripped
 GameObject:
@@ -774,6 +814,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 824664019732238911, guid: a73aa5ac15695dd4fa2c60e32594f05e, type: 3}
@@ -1153,6 +1194,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a73aa5ac15695dd4fa2c60e32594f05e, type: 3}
 --- !u!4 &1782615564 stripped
 Transform:
@@ -1182,10 +1226,23 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845909465}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 530.22595, y: 530.7448, z: -598.27673}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 613164282}
+  - {fileID: 1130090661}
+  - {fileID: 440981557}
+  - {fileID: 1693011114}
+  - {fileID: 1021245356}
+  - {fileID: 1845909466}
+  - {fileID: 936801978}
+  - {fileID: 1547582551}

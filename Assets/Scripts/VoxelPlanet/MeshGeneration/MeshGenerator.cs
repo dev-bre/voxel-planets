@@ -151,7 +151,7 @@ public class MeshGenerator : MonoBehaviour
             CellToVertexIdMaps cellToVertexIdMaps = new CellToVertexIdMaps(64, Allocator.Temp);
 
             NativeList<Vertex> vertices = new NativeList<Vertex>(64, Allocator.Temp);
-            NativeMultiHashMap<byte, Triangle> triangles = new NativeMultiHashMap<byte, Triangle>(64, Allocator.Temp);
+            NativeParallelMultiHashMap<byte, Triangle> triangles = new NativeParallelMultiHashMap<byte, Triangle>(64, Allocator.Temp);
 
             ProcessMainChunk(cellToVertexIdMaps, vertices, triangles);
 
@@ -171,7 +171,7 @@ public class MeshGenerator : MonoBehaviour
             triangles.Dispose();
         }
 
-        void ProcessMainChunk(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessMainChunk(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             var cellToVertexId = cellToVertexIdMaps.GetMap(Location.main);
             int3 length3D = mainChunk.materials.GetLength3D();
@@ -205,7 +205,7 @@ public class MeshGenerator : MonoBehaviour
         }
 
         // TODO: One reusable/generic method for processing seams
-        void ProcessSeamX(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamX(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             int3 main_length3D = mainChunk.materials.GetLength3D();
             int3 seamX_length3D = seamX.materials.GetLength3D();
@@ -253,7 +253,7 @@ public class MeshGenerator : MonoBehaviour
             }  
         }
 
-        void ProcessSeamY(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamY(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             int3 main_length3D = mainChunk.materials.GetLength3D();
             int3 seamY_length3D = seamY.materials.GetLength3D();
@@ -301,7 +301,7 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        void ProcessSeamZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             int3 main_length3D = mainChunk.materials.GetLength3D();
             int3 seamZ_length3D = seamZ.materials.GetLength3D();
@@ -349,7 +349,7 @@ public class MeshGenerator : MonoBehaviour
             }
         }
         
-        void ProcessSeamXY(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamXY(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             Location edgeLocation;
             VoxelGrid edgeVoxelGrid;
@@ -413,7 +413,7 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        void ProcessSeamYZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamYZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             Location edgeLocation;
             VoxelGrid edgeVoxelGrid;
@@ -475,7 +475,7 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        void ProcessSeamXZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void ProcessSeamXZ(CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             Location edgeLocation;
             VoxelGrid edgeVoxelGrid;
@@ -542,7 +542,7 @@ public class MeshGenerator : MonoBehaviour
             return (materials[edgeStart] == 0 && materials[edgeEnd] != 0) || (materials[edgeStart] != 0 && materials[edgeEnd] == 0);
         }
 
-        void CreateFace(int3 edgeStart, int3 edgeEnd, NativeHashMap<int, ushort> cellToVertexId, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void CreateFace(int3 edgeStart, int3 edgeEnd, NativeHashMap<int, ushort> cellToVertexId, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             VoxelGrid voxelGrid = mainChunk;
             byte edgeMaterial = (byte)(voxelGrid.materials[edgeStart] + voxelGrid.materials[edgeEnd]);
@@ -567,7 +567,7 @@ public class MeshGenerator : MonoBehaviour
             triangles.Add(edgeMaterial, triangle2);
         }
 
-        void CreateSeamFace(SeamEdge seamEdge, CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeMultiHashMap<byte, Triangle> triangles)
+        void CreateSeamFace(SeamEdge seamEdge, CellToVertexIdMaps cellToVertexIdMaps, NativeList<Vertex> vertices, NativeParallelMultiHashMap<byte, Triangle> triangles)
         {
             VoxelGrid edgeVoxelGrid = GetVoxelGrid(seamEdge.location);
             byte edgeMaterial = (byte)(edgeVoxelGrid.materials[seamEdge.start] + edgeVoxelGrid.materials[seamEdge.end]);
@@ -857,7 +857,7 @@ public class MeshGenerator : MonoBehaviour
         }
     }
 
-    static void FillMeshData(in NativeList<Vertex> vertices, in NativeMultiHashMap<byte, Triangle> triangles, MeshData meshData, NativeList<byte> matIdPerSubmesh)
+    static void FillMeshData(in NativeList<Vertex> vertices, in NativeParallelMultiHashMap<byte, Triangle> triangles, MeshData meshData, NativeList<byte> matIdPerSubmesh)
     {
         //VERTEX BUFFER DATA
         NativeArray<VertexAttributeDescriptor> nativeLayout = new NativeArray<VertexAttributeDescriptor>(1, Allocator.Temp);
